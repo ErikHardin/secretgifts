@@ -1,0 +1,14 @@
+name = "secretgifts"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+DB_URL = "https://PASTE_PROJECT_ID-default-rtdb.firebaseio.com"
+ADMIN_EMAIL = "erikchardin@gmail.com"
+APP_URL = "https://ech-technicalsolutions.com/secretgifts/"
+FROM_EMAIL = "Secret Gifts <gifts@ech-technicalsolutions.com>"
+ALLOWED_ORIGIN = "https://ech-technicalsolutions.com"
+
+# Secrets (set in the Cloudflare dashboard, never commit):
+#   SERVICE_ACCOUNT_JSON
+#   RESEND_API_KEY

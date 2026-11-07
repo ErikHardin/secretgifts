@@ -1,0 +1,63 @@
+{
+  "rules": {
+    "emailIndex": {
+      ".write": "auth != null && auth.token.email_verified == true && auth.token.email.toLowerCase() == 'erikchardin@gmail.com'",
+      "$key": {
+        ".read": "auth != null && auth.token.email_verified == true && (auth.token.email.toLowerCase().replace('.', ',') == $key || auth.token.email.toLowerCase() == 'erikchardin@gmail.com')"
+      }
+    },
+    "people": {
+      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email.toLowerCase() == 'erikchardin@gmail.com' || root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).exists())",
+      ".write": "auth != null && auth.token.email_verified == true && auth.token.email.toLowerCase() == 'erikchardin@gmail.com'",
+      "$pid": {
+        "about": {
+          ".write": "auth != null && auth.token.email_verified == true && root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).val() == $pid",
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2000)"
+        }
+      }
+    },
+    "exchanges": {
+      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email.toLowerCase() == 'erikchardin@gmail.com' || root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).exists())",
+      ".write": "auth != null && auth.token.email_verified == true && auth.token.email.toLowerCase() == 'erikchardin@gmail.com'"
+    },
+    "wishlists": {
+      ".read": "auth != null && auth.token.email_verified == true && (auth.token.email.toLowerCase() == 'erikchardin@gmail.com' || root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).exists())",
+      "$pid": {
+        ".write": "auth != null && auth.token.email_verified == true && (auth.token.email.toLowerCase() == 'erikchardin@gmail.com' || root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).val() == $pid)",
+        "$item": {
+          ".validate": "!newData.exists() || (newData.child('title').isString() && newData.child('title').val().length > 0 && newData.child('title').val().length <= 200)"
+        }
+      }
+    },
+    "matches": {
+      "$ex": {
+        ".write": "auth != null && auth.token.email_verified == true && auth.token.email.toLowerCase() == 'erikchardin@gmail.com' && !newData.exists()",
+        "$giver": {
+          ".read": "auth != null && auth.token.email_verified == true && root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).val() == $giver"
+        }
+      }
+    },
+    "history_manual": {
+      ".read": "auth != null && auth.token.email_verified == true && auth.token.email.toLowerCase() == 'erikchardin@gmail.com'",
+      ".write": "auth != null && auth.token.email_verified == true && auth.token.email.toLowerCase() == 'erikchardin@gmail.com'"
+    },
+    "history_drawn": {
+      "$ex": {
+        ".write": "auth != null && auth.token.email_verified == true && auth.token.email.toLowerCase() == 'erikchardin@gmail.com' && !newData.exists()"
+      }
+    },
+    "qa": {
+      "$ex": {
+        ".write": "auth != null && auth.token.email_verified == true && auth.token.email.toLowerCase() == 'erikchardin@gmail.com' && !newData.exists()",
+        "$rid": {
+          ".read": "auth != null && auth.token.email_verified == true && (root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).val() == $rid || root.child('matches').child($ex).child(root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).val()).val() == $rid)",
+          "$qid": {
+            ".write": "auth != null && auth.token.email_verified == true && root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).exists() && ((!data.exists() && newData.exists() && !newData.child('a').exists() && root.child('matches').child($ex).child(root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).val()).val() == $rid) || (data.exists() && newData.exists() && root.child('emailIndex').child(auth.token.email.toLowerCase().replace('.', ',')).val() == $rid && newData.child('q').val() == data.child('q').val()))",
+            ".validate": "newData.child('q').isString() && newData.child('q').val().length > 0 && newData.child('q').val().length <= 500 && newData.child('askedAt').isNumber()",
+            "a": { ".validate": "newData.isString() && newData.val().length <= 1000" }
+          }
+        }
+      }
+    }
+  }
+}

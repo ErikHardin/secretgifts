@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Secret Gifts</title>
+<meta name="theme-color" content="#b3262e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Secret Gifts">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#b3262e;--red-d:#8e1d24;--green:#1f6b45;--green-d:#174f33;--green-l:#e7f1eb;
+  --gold:#c9a227;--bg:#fbf6ee;--card:#ffffff;--ink:#2a2320;--muted:#7d7168;--line:#eadfcd;--field:#fdfaf5;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#16120e;--card:#221c17;--ink:#f3ebe0;--muted:#a89a8c;--line:#3a3028;--field:#1b1612;--green-l:#1c2b22}
+}
+:root[data-theme="dark"]{--bg:#16120e;--card:#221c17;--ink:#f3ebe0;--muted:#a89a8c;--line:#3a3028;--field:#1b1612;--green-l:#1c2b22}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+a{color:var(--green)}
+.top{background:var(--red);color:#fff;padding:calc(env(safe-area-inset-top) + 14px) 16px 14px;display:flex;align-items:center;justify-content:space-between;
+  background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.07) 0 10px,transparent 10px 22px)}
+.brand{font-family:Fraunces,Georgia,serif;font-size:22px;font-weight:700;letter-spacing:.2px}
+.top .link{color:#fff;opacity:.9;background:none;border:0;font:inherit;font-size:14px;cursor:pointer}
+nav{display:flex;gap:6px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5;overflow-x:auto}
+nav:empty{display:none}
+nav button{border:0;background:transparent;padding:8px 14px;border-radius:999px;font:inherit;font-weight:600;color:var(--muted);white-space:nowrap;cursor:pointer}
+nav button.on{background:var(--green);color:#fff}
+main{max-width:720px;margin:0 auto;padding:16px 16px calc(60px + env(safe-area-inset-bottom))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+h2{font-family:Fraunces,Georgia,serif;margin:0 0 4px;font-size:21px;line-height:1.2}
+h3{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-size:19px}
+.section-title{font-family:Fraunces,Georgia,serif;font-size:17px;margin:22px 0 10px}
+.muted{color:var(--muted)}.small{font-size:14px}.center{text-align:center}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.between{justify-content:space-between}.grow{flex:1;min-width:0}.nowrap{flex-wrap:nowrap}
+.mt{margin-top:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;background:var(--green);color:#fff;font:inherit;font-weight:600;padding:10px 16px;border-radius:10px;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--green-d)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.red{background:var(--red)}.btn.red:hover{background:var(--red-d)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--field)}
+.btn.sm{padding:6px 12px;font-size:14px}
+.btn.block{width:100%}
+.linkbtn{background:none;border:0;padding:0;color:var(--green);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer}
+.pill{display:inline-block;font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--green-l);color:var(--green)}
+.pill.red{background:#f8e4e5;color:var(--red)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill.red{background:#3a1f21;color:#f19aa0}}
+.chip{display:inline-block;font-size:12px;padding:2px 8px;border-radius:6px;background:var(--field);border:1px solid var(--line);color:var(--muted)}
+.chip.warn{color:var(--red);border-color:#e9b9bc}
+.facts{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-top:6px}
+.item{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line);align-items:flex-start}
+.item:first-child{border-top:0}
+.item-title{font-weight:600;word-break:break-word}
+.item-title a{text-decoration:none}
+.item-title a:hover{text-decoration:underline}
+.reveal{width:100%;padding:20px;font-size:18px;background:var(--red);border-radius:12px;margin-top:12px}
+.reveal:hover{background:var(--red-d)}
+.giftee{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.giftee-name{font-family:Fraunces,Georgia,serif;font-size:30px;font-weight:700;color:var(--red);line-height:1.1}
+.about{white-space:pre-wrap;background:var(--field);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:15px}
+.q{background:var(--green-l);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:15px}
+.q .a{margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,0,0,.06)}
+.empty{text-align:center;padding:30px 18px}
+.empty .big{font-size:40px}
+dialog{border:0;border-radius:16px;padding:0;width:min(520px,calc(100vw - 32px));background:var(--card);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(20,10,5,.5)}
+dialog form{padding:20px;max-height:85vh;overflow:auto}
+.dlg-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+.dlg-actions .spacer{flex:1}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink)}
+textarea{min-height:90px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--green);outline-offset:0;border-color:transparent}
+.checks{max-height:240px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:4px 12px;background:var(--field)}
+.checks label{display:flex;gap:10px;align-items:center;font-weight:400;margin:8px 0;font-size:15px}
+.checks input{width:auto;margin:0}
+.hint{font-size:13px;color:var(--muted);margin-top:4px}
+.pair{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin:8px 0}
+.pair span{font-size:15px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,150%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-size:15px;max-width:calc(100vw - 32px);transition:transform .25s;z-index:50}
+#toast.show{transform:translate(-50%,0)}
+.signin{max-width:420px;margin:30px auto}
+.signin .big{font-size:52px;text-align:center}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+</head>
+<body>
+<header class="top"><div class="brand">🎁 Secret Gifts</div><div id="who"></div></header>
+<nav id="tabs"></nav>
+<main id="app"><div class="center muted">Loading…</div></main>
+<dialog id="dlg"><form method="dialog" id="dlgForm"></form></dialog>
+<div id="toast"></div>
+
+<script>
+// ====== SETUP: paste your values here ======
+const CONFIG = {
+  firebase: {
+    apiKey: "PASTE_API_KEY",
+    authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://PASTE_PROJECT_ID-default-rtdb.firebaseio.com",
+    projectId: "PASTE_PROJECT_ID",
+    appId: "PASTE_APP_ID"
+  },
+  workerUrl: "https://secretgifts.YOUR-SUBDOMAIN.workers.dev",
+  adminEmail: "erikchardin@gmail.com"
+};
+// ===========================================
+
+firebase.initializeApp(CONFIG.firebase);
+const auth = firebase.auth();
+const db = firebase.database();
+const TS = firebase.database.ServerValue.TIMESTAMP;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const keyOf = e => String(e).trim().toLowerCase().replace(/\./g, ',');
+const money = n => '$' + Number(n || 0).toLocaleString('en-US', {maximumFractionDigits: 2});
+const firstName = n => String(n || '').trim().split(/\s+/)[0] || '';
+const nameOf = pid => S.people[pid]?.name || 'Someone';
+const safeUrl = u => /^https?:\/\/\S+$/i.test(String(u || '').trim()) ? String(u).trim() : '';
+const domainOf = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return ''; } };
+const fmtDate = d => { if (!d) return ''; const dt = new Date(d + 'T12:00:00'); return isNaN(dt) ? d : dt.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric', year:'numeric'}); };
+const byName = (a, b) => (S.people[a]?.name || '').localeCompare(S.people[b]?.name || '');
+
+const S = {
+  ready: false, user: null, isAdmin: false, myPid: null,
+  people: {}, exchanges: {}, wishlists: {}, matches: {}, qa: {},
+  revealed: {}, tab: 'exchanges', subs: [], dyn: {}
+};
+
+let raf;
+function render() { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); }
+
+let toastT;
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+async function api(path, body) {
+  const token = await auth.currentUser.getIdToken();
+  const r = await fetch(CONFIG.workerUrl.replace(/\/+$/, '') + path, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', Authorization: 'Bearer ' + token},
+    body: JSON.stringify(body || {})
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || 'Request failed');
+  return j;
+}
+
+// ---------- auth ----------
+if (auth.isSignInWithEmailLink(location.href)) {
+  let email = null;
+  try { email = localStorage.getItem('sg_email'); } catch {}
+  if (!email) email = prompt('Confirm your email address to finish signing in');
+  if (email) {
+    auth.signInWithEmailLink(email.trim(), location.href)
+      .then(() => { try { localStorage.removeItem('sg_email'); } catch {} history.replaceState(null, '', location.pathname); })
+      .catch(e => toast(e.code === 'auth/invalid-action-code' ? 'That sign-in link expired. Request a new one.' : e.message));
+  }
+}
+
+function sub(path, fn) {
+  const ref = db.ref(path);
+  const cb = s => { fn(s.val()); syncDyn(); render(); };
+  ref.on('value', cb, e => console.warn(path, e.message));
+  S.subs.push(() => ref.off('value', cb));
+}
+
+function clearSubs() {
+  S.subs.forEach(f => f()); S.subs = [];
+  Object.values(S.dyn).forEach(f => f()); S.dyn = {};
+}
+
+auth.onAuthStateChanged(u => {
+  clearSubs();
+  Object.assign(S, {user: u, isAdmin: false, myPid: null, people: {}, exchanges: {}, wishlists: {}, matches: {}, qa: {}, revealed: {}});
+  if (!u) { S.ready = true; render(); return; }
+  S.isAdmin = (u.email || '').toLowerCase() === CONFIG.adminEmail.toLowerCase();
+  let first = true;
+  const ref = db.ref('emailIndex/' + keyOf(u.email));
+  const cb = s => {
+    const pid = s.val();
+    const changed = pid !== S.myPid;
+    S.myPid = pid;
+    if (first || changed) {
+      first = false;
+      S.subs.filter((_, i) => i > 0).forEach(f => f());
+      S.subs = S.subs.slice(0, 1);
+      if (pid || S.isAdmin) {
+        sub('people', v => S.people = v || {});
+        sub('exchanges', v => S.exchanges = v || {});
+        sub('wishlists', v => S.wishlists = v || {});
+      }
+    }
+    S.ready = true; syncDyn(); render();
+  };
+  ref.on('value', cb, () => { S.ready = true; render(); });
+  S.subs.push(() => ref.off('value', cb));
+});
+
+// Listeners for my match and Q&A in drawn exchanges
+function syncDyn() {
+  const want = {};
+  if (S.myPid) {
+    for (const [id, ex] of Object.entries(S.exchanges)) {
+      if (!ex.members?.[S.myPid] || ex.status !== 'drawn') continue;
+      want[`matches/${id}/${S.myPid}`] = v => { S.matches[id] = v; };
+      want[`qa/${id}/${S.myPid}`] = v => { (S.qa[id] ||= {}).forMe = v || {}; };
+      const r = S.matches[id];
+      if (r) want[`qa/${id}/${r}`] = v => { (S.qa[id] ||= {}).mine = v || {}; };
+    }
+  }
+  for (const p of Object.keys(S.dyn)) {
+    if (!want[p]) {
+      S.dyn[p](); delete S.dyn[p];
+      const [kind, id, who] = p.split('/');
+      if (kind === 'matches') delete S.matches[id];
+      if (kind === 'qa' && S.qa[id]) { if (who === S.myPid) delete S.qa[id].forMe; else delete S.qa[id].mine; }
+    }
+  }
+  for (const [p, fn] of Object.entries(want)) {
+    if (S.dyn[p]) continue;
+    const ref = db.ref(p);
+    const cb = s => { fn(s.val()); syncDyn(); render(); };
+    ref.on('value', cb, e => console.warn(p, e.message));
+    S.dyn[p] = () => ref.off('value', cb);
+  }
+}
+
+// ---------- views ----------
+function draw() {
+  const app = $('#app'), tabs = $('#tabs'), who = $('#who');
+  if (!S.ready) { app.innerHTML = '<div class="center muted">Loading…</div>'; return; }
+  if (!S.user) { tabs.innerHTML = ''; who.innerHTML = ''; app.innerHTML = viewSignIn(); return; }
+  who.innerHTML = `<button class="link" data-act="signout">Sign out</button>`;
+  if (!S.myPid && !S.isAdmin) {
+    tabs.innerHTML = '';
+    app.innerHTML = `<div class="card empty"><div class="big">🎄</div><h2>You're not on a list yet</h2>
+      <p class="muted">${esc(S.user.email)} isn't in any gift exchange. Ask the organizer to add this email address.</p></div>`;
+    return;
+  }
+  const T = [['exchanges', 'My Exchanges'], ['wishlist', 'My Wishlist']];
+  if (S.isAdmin) T.push(['admin', 'Admin']);
+  tabs.innerHTML = T.map(([k, l]) => `<button data-tab="${k}" class="${S.tab === k ? 'on' : ''}">${l}</button>`).join('');
+  app.innerHTML = S.tab === 'admin' ? viewAdmin() : S.tab === 'wishlist' ? viewWishlist() : viewExchanges();
+}
+
+function viewSignIn() {
+  return `<div class="card signin"><div class="big">🎁</div>
+    <h2 class="center">Welcome to Secret Gifts</h2>
+    <p class="muted center small">Enter your email and we'll send you a link to sign in. No password needed.</p>
+    <form id="signinForm">
+      <label for="si_email">Email</label>
+      <input id="si_email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+      <button class="btn block mt" type="submit">Email me a sign-in link</button>
+    </form>
+    <p id="si_msg" class="small center muted"></p></div>`;
+}
+
+function needSelf() {
+  return `<div class="card empty"><div class="big">👋</div><h2>Add yourself first</h2>
+    <p class="muted">Go to Admin, add yourself as a person with ${esc(S.user.email)}, then you'll see your exchanges here.</p></div>`;
+}
+
+function itemsHtml(pid, editable, cap) {
+  const items = Object.entries(S.wishlists[pid] || {}).sort((a, b) => (a[1].ts || 0) - (b[1].ts || 0));
+  if (!items.length) {
+    return `<p class="muted small">${editable ? "Nothing here yet. Add things you'd love, with links to Amazon, Target, or any site." : 'No wishlist items yet. Try sending an anonymous question.'}</p>`;
+  }
+  return items.map(([id, it]) => {
+    const u = safeUrl(it.url);
+    const over = cap && it.price && Number(it.price) > Number(cap);
+    return `<div class="item"><div class="grow">
+      <div class="item-title">${u ? `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(it.title)} ↗</a>` : esc(it.title)}</div>
+      <div class="row small muted" style="margin-top:4px">${u ? `<span class="chip">${esc(domainOf(u))}</span>` : ''}${it.price ? `<span>${money(it.price)}</span>` : ''}${over ? '<span class="chip warn">Over limit</span>' : ''}</div>
+      ${it.note ? `<div class="small" style="margin-top:4px">${esc(it.note)}</div>` : ''}
+      </div>${editable ? `<button class="btn ghost sm" data-act="item-edit" data-id="${id}">Edit</button>` : ''}</div>`;
+  }).join('');
+}
+
+function viewExchanges() {
+  if (!S.myPid) return needSelf();
+  const mine = Object.entries(S.exchanges).filter(([, ex]) => ex.members?.[S.myPid])
+    .sort((a, b) => (b[1].year || 0) - (a[1].year || 0) || (a[1].name || '').localeCompare(b[1].name || ''));
+  if (!mine.length) return `<div class="card empty"><div class="big">🎄</div><h2>No exchanges yet</h2><p class="muted">Once the organizer adds you to a gift exchange, it'll show up here. Meanwhile, start your wishlist.</p><button class="btn" data-tab="wishlist">Start my wishlist</button></div>`;
+
+  return mine.map(([id, ex]) => {
+    const n = Object.keys(ex.members || {}).length;
+    let body;
+    if (ex.status !== 'drawn') {
+      body = `<p class="muted small mt">Names haven't been drawn yet. Add ideas to your wishlist so your Secret Santa knows what you'd love.</p>`;
+    } else {
+      const rid = S.matches[id];
+      const qa = S.qa[id] || {};
+      if (!rid) body = `<p class="muted small mt">Loading your match…</p>`;
+      else if (!S.revealed[id]) body = `<button class="btn reveal" data-act="reveal" data-id="${id}">🎁 Tap to see who you got</button>`;
+      else {
+        const them = S.people[rid] || {};
+        const myQs = Object.entries(qa.mine || {}).sort((a, b) => (a[1].askedAt || 0) - (b[1].askedAt || 0));
+        body = `<div class="giftee">
+          <div class="row between"><span class="muted small">You're shopping for</span><button class="linkbtn" data-act="hide" data-id="${id}">Hide</button></div>
+          <div class="giftee-name">${esc(them.name || 'Someone')}</div>
+          ${them.about ? `<div class="about">${esc(them.about)}</div>` : ''}
+          <div class="section-title">Their wishlist</div>
+          ${itemsHtml(rid, false, ex.cap)}
+          <div class="section-title">Ask anonymously</div>
+          ${myQs.length ? myQs.map(([, q]) => `<div class="q"><div><strong>You asked:</strong> ${esc(q.q)}</div>${q.a ? `<div class="a"><strong>${esc(firstName(them.name))}:</strong> ${esc(q.a)}</div>` : '<div class="a muted small">Waiting for an answer</div>'}</div>`).join('') : `<p class="muted small">Not sure what to get? ${esc(firstName(them.name))} won't know it's you.</p>`}
+          <button class="btn ghost sm mt" data-act="ask" data-id="${id}">Ask a question</button>
+        </div>`;
+      }
+      const forMe = Object.entries(qa.forMe || {}).sort((a, b) => (!!a[1].a - !!b[1].a) || (b[1].askedAt || 0) - (a[1].askedAt || 0));
+      if (forMe.length) {
+        body += `<div class="section-title">Questions from your Secret Santa</div>` +
+          forMe.map(([qid, q]) => `<div class="q"><div>${esc(q.q)}</div>${q.a ? `<div class="a"><strong>You:</strong> ${esc(q.a)} <button class="linkbtn" data-act="answer" data-id="${id}" data-q="${qid}">Edit</button></div>` : `<button class="btn sm mt" data-act="answer" data-id="${id}" data-q="${qid}">Answer</button>`}</div>`).join('');
+      }
+      body += `<div class="mt"><button class="linkbtn" data-act="resend" data-id="${id}">Email me my match again</button></div>`;
+    }
+    return `<section class="card">
+      <div class="row between"><h2>${esc(ex.name)}</h2><span class="pill">${esc(ex.year || '')}</span></div>
+      <div class="facts">${ex.cap ? `<span>Limit ${money(ex.cap)}</span>` : ''}${ex.date ? `<span>${esc(fmtDate(ex.date))}</span>` : ''}<span>${n} people</span></div>
+      ${ex.message ? `<p class="small" style="margin:10px 0 0">${esc(ex.message)}</p>` : ''}
+      ${body}</section>`;
+  }).join('');
+}
+
+function viewWishlist() {
+  if (!S.myPid) return needSelf();
+  const me = S.people[S.myPid] || {};
+  return `<section class="card">
+      <div class="row between"><h2>About me</h2><button class="btn ghost sm" data-act="about">Edit</button></div>
+      ${me.about ? `<div class="about">${esc(me.about)}</div>` : `<p class="muted small">Sizes, favorite colors, hobbies, things you don't want. Helps whoever draws your name.</p>`}
+    </section>
+    <section class="card">
+      <div class="row between"><h2>My wishlist</h2><button class="btn sm" data-act="item-add">+ Add item</button></div>
+      <div class="mt">${itemsHtml(S.myPid, true)}</div>
+    </section>`;
+}
+
+function viewAdmin() {
+  const exs = Object.entries(S.exchanges).sort((a, b) => (b[1].year || 0) - (a[1].year || 0) || (a[1].name || '').localeCompare(b[1].name || ''));
+  const pids = Object.keys(S.people).sort(byName);
+  const exHtml = exs.length ? exs.map(([id, ex]) => {
+    const n = Object.keys(ex.members || {}).length;
+    const drawn = ex.status === 'drawn';
+    return `<section class="card">
+      <div class="row between"><h2>${esc(ex.name)}</h2><span class="pill ${drawn ? '' : 'red'}">${drawn ? 'Drawn' : 'Not drawn'}</span></div>
+      <div class="facts"><span>${esc(ex.year || '')}</span>${ex.cap ? `<span>Limit ${money(ex.cap)}</span>` : ''}${ex.date ? `<span>${esc(fmtDate(ex.date))}</span>` : ''}<span>${n} people</span></div>
+      ${drawn ? `<p class="small muted" style="margin:8px 0 0">Drawn ${ex.drawnAt ? new Date(ex.drawnAt).toLocaleDateString('en-US') : ''}. Matches are hidden, even from you.</p>` : ''}
+      <div class="row mt">
+        <button class="btn ghost sm" data-act="ex-edit" data-id="${id}">Edit</button>
+        <button class="btn ghost sm" data-act="ex-history" data-id="${id}">Last year's pairs</button>
+        <button class="btn ghost sm" data-act="ex-invite" data-id="${id}">Send invites</button>
+        ${drawn ? `<button class="btn ghost sm" data-act="ex-draw" data-id="${id}" data-force="1">Redraw</button>` : `<button class="btn red sm" data-act="ex-draw" data-id="${id}">Draw names</button>`}
+      </div></section>`;
+  }).join('') : `<div class="card muted small">No exchanges yet.</div>`;
+
+  const pHtml = pids.length ? `<section class="card">${pids.map(pid => {
+    const p = S.people[pid];
+    const ex = Object.entries(p.excludes || {}).sort((a, b) => byName(a[0], b[0]))
+      .map(([o, t]) => `${esc(nameOf(o))}${t === 'spouse' ? ' (spouse)' : ''}`).join(', ');
+    const inEx = Object.values(S.exchanges).filter(e => e.members?.[pid]).length;
+    return `<div class="item"><div class="grow">
+      <div class="item-title">${esc(p.name)}</div>
+      <div class="small muted">${esc(p.email)} · ${inEx} exchange${inEx === 1 ? '' : 's'}</div>
+      ${ex ? `<div class="small" style="margin-top:2px">Can't draw: ${ex}</div>` : ''}
+      </div><button class="btn ghost sm" data-act="person-edit" data-id="${pid}">Edit</button></div>`;
+  }).join('')}</section>` : `<div class="card muted small">No people yet. Start by adding yourself.</div>`;
+
+  return `<div class="row between"><div class="section-title" style="margin-top:4px">Exchanges</div><button class="btn sm" data-act="ex-add">+ New exchange</button></div>
+    ${exHtml}
+    <div class="row between"><div class="section-title">People</div><button class="btn sm" data-act="person-add">+ Add person</button></div>
+    ${pHtml}`;
+}
+
+// ---------- dialogs ----------
+function openDialog({title, body, save = 'Save', danger, onSave}) {
+  const f = $('#dlgForm'), d = $('#dlg');
+  f.innerHTML = `<h3>${esc(title)}</h3>${body}
+    <div class="dlg-actions">${danger ? `<button value="del" class="btn ghost" formnovalidate style="color:var(--red)">${esc(danger.label)}</button><span class="spacer"></span>` : ''}
+    <button value="cancel" class="btn ghost" formnovalidate>Cancel</button><button value="ok" class="btn${save.danger ? ' red' : ''}">${esc(save.label || save)}</button></div>`;
+  f.onsubmit = async e => {
+    const v = e.submitter?.value;
+    if (v === 'cancel') return;
+    e.preventDefault();
+    const btn = e.submitter; btn.disabled = true;
+    try {
+      if (v === 'del') { if (confirm(danger.confirm || 'Are you sure?')) { await danger.fn(); d.close(); } }
+      else if ((await onSave(new FormData(f), f)) !== false) d.close();
+    } catch (err) { toast(err.message); }
+    finally { btn.disabled = false; }
+  };
+  d.showModal();
+  setTimeout(() => f.querySelector('input:not([type=checkbox]),textarea,select')?.focus(), 30);
+}
+
+function confirmDialog(title, text, label, fn, danger = true) {
+  openDialog({title, body: `<p>${text}</p>`, save: {label, danger}, onSave: fn});
+}
+
+function itemDialog(id) {
+  const it = id ? (S.wishlists[S.myPid] || {})[id] || {} : {};
+  openDialog({
+    title: id ? 'Edit item' : 'Add to wishlist',
+    body: `<label>What is it?</label><input name="title" required maxlength="200" value="${esc(it.title)}" placeholder="Cozy wool socks">
+      <label>Link (optional)</label><input name="url" type="url" inputmode="url" value="${esc(it.url)}" placeholder="https://www.amazon.com/...">
+      <div class="hint">Paste a link from Amazon, Target, Etsy, or any store.</div>
+      <label>Price (optional)</label><input name="price" type="number" min="0" step="0.01" inputmode="decimal" value="${esc(it.price)}" placeholder="25">
+      <label>Notes (optional)</label><textarea name="note" maxlength="500" placeholder="Size medium, any color but yellow">${esc(it.note)}</textarea>`,
+    danger: id ? {label: 'Delete', confirm: 'Delete this item?', fn: () => db.ref(`wishlists/${S.myPid}/${id}`).remove()} : null,
+    onSave: async fd => {
+      const url = String(fd.get('url') || '').trim();
+      if (url && !safeUrl(url)) throw new Error('Links must start with http:// or https://');
+      const data = {
+        title: String(fd.get('title')).trim(),
+        url: url || null,
+        price: fd.get('price') ? Number(fd.get('price')) : null,
+        note: String(fd.get('note') || '').trim() || null,
+        ts: it.ts || Date.now()
+      };
+      if (id) await db.ref(`wishlists/${S.myPid}/${id}`).set(data);
+      else await db.ref(`wishlists/${S.myPid}`).push(data);
+    }
+  });
+}
+
+function aboutDialog() {
+  openDialog({
+    title: 'About me',
+    body: `<textarea name="about" maxlength="2000" style="min-height:160px" placeholder="Shirt: M · Shoes: 10 · Love coffee, hiking, mysteries · No candles please">${esc(S.people[S.myPid]?.about)}</textarea>`,
+    onSave: fd => db.ref(`people/${S.myPid}/about`).set(String(fd.get('about') || '').trim() || null)
+  });
+}
+
+function personDialog(pid) {
+  const p = pid ? S.people[pid] : {};
+  const others = Object.keys(S.people).filter(o => o !== pid).sort(byName);
+  const ex = p.excludes || {};
+  const spouse = Object.keys(ex).find(o => ex[o] === 'spouse') || '';
+  openDialog({
+    title: pid ? 'Edit person' : 'Add person',
+    body: `<label>Name</label><input name="name" required maxlength="80" value="${esc(p.name)}" placeholder="Megan Hardin">
+      <label>Email</label><input name="email" type="email" required value="${esc(p.email)}" placeholder="name@example.com">
+      <div class="hint">They'll sign in with this email.</div>
+      ${others.length ? `<label>Spouse or partner</label><select name="spouse"><option value="">None</option>${others.map(o => `<option value="${o}" ${o === spouse ? 'selected' : ''}>${esc(nameOf(o))}</option>`).join('')}</select>
+      <label>Direct family (can't draw each other)</label>
+      <div class="checks">${others.map(o => `<label><input type="checkbox" name="family" value="${o}" ${ex[o] === 'family' ? 'checked' : ''}> ${esc(nameOf(o))}</label>`).join('')}</div>
+      <div class="hint">Exclusions go both ways automatically.</div>` : ''}`,
+    danger: pid ? {label: 'Remove', confirm: `Remove ${p.name}? This deletes their wishlist and takes them out of every exchange.`, fn: () => deletePerson(pid)} : null,
+    onSave: fd => savePerson(pid, fd)
+  });
+}
+
+async function savePerson(pid, fd) {
+  const name = String(fd.get('name')).trim();
+  const email = String(fd.get('email')).trim().toLowerCase();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error('Enter a valid email');
+  if (/[#$\[\]\/]/.test(email)) throw new Error('That email has characters the app can\'t store');
+  for (const [k, o] of Object.entries(S.people)) if (k !== pid && o.email === email) throw new Error(`${o.name} already uses that email`);
+  const isNew = !pid;
+  if (isNew) pid = db.ref('people').push().key;
+  const old = S.people[pid] || {};
+  const spouse = fd.get('spouse') || '';
+  const ex = {};
+  for (const f of fd.getAll('family')) ex[f] = 'family';
+  if (spouse) ex[spouse] = 'spouse';
+
+  const u = {};
+  u[`people/${pid}/name`] = name;
+  u[`people/${pid}/email`] = email;
+  u[`people/${pid}/excludes`] = Object.keys(ex).length ? ex : null;
+  if (old.email && old.email !== email) u['emailIndex/' + keyOf(old.email)] = null;
+  u['emailIndex/' + keyOf(email)] = pid;
+  for (const o of Object.keys(old.excludes || {})) if (!ex[o]) u[`people/${o}/excludes/${pid}`] = null;
+  for (const [o, t] of Object.entries(ex)) u[`people/${o}/excludes/${pid}`] = t;
+  await db.ref().update(u);
+  toast(isNew ? `Added ${name}` : 'Saved');
+}
+
+async function deletePerson(pid) {
+  const p = S.people[pid];
+  const u = {[`people/${pid}`]: null, [`wishlists/${pid}`]: null};
+  if (p.email) u['emailIndex/' + keyOf(p.email)] = null;
+  for (const o of Object.keys(p.excludes || {})) u[`people/${o}/excludes/${pid}`] = null;
+  for (const [id, ex] of Object.entries(S.exchanges)) if (ex.members?.[pid]) u[`exchanges/${id}/members/${pid}`] = null;
+  await db.ref().update(u);
+  toast(`Removed ${p.name}`);
+}
+
+function exchangeDialog(id) {
+  const ex = id ? S.exchanges[id] : {year: new Date().getFullYear()};
+  const pids = Object.keys(S.people).sort(byName);
+  openDialog({
+    title: id ? 'Edit exchange' : 'New exchange',
+    body: `<label>Name</label><input name="name" required maxlength="80" value="${esc(ex.name)}" placeholder="Hardin Family Christmas">
+      <div class="row nowrap"><div class="grow"><label>Year</label><input name="year" type="number" required min="2000" max="2100" value="${esc(ex.year)}"></div>
+      <div class="grow"><label>Gift limit ($)</label><input name="cap" type="number" min="0" step="1" inputmode="numeric" value="${esc(ex.cap)}" placeholder="50"></div></div>
+      <label>Exchange date (optional)</label><input name="date" type="date" value="${esc(ex.date)}">
+      <label>Message to everyone (optional)</label><textarea name="message" maxlength="500" placeholder="We'll open gifts after dinner on Christmas Eve!">${esc(ex.message)}</textarea>
+      <label>Who's in?</label>
+      ${pids.length ? `<div class="checks"><label><input type="checkbox" id="selAll"> <strong>Everyone</strong></label>${pids.map(p => `<label><input type="checkbox" name="members" value="${p}" ${ex.members?.[p] ? 'checked' : ''}> ${esc(nameOf(p))}</label>`).join('')}</div>` : '<p class="muted small">Add people first.</p>'}
+      ${ex.status === 'drawn' ? '<div class="hint">Names were already drawn. If you change who\'s in, use Redraw.</div>' : ''}`,
+    danger: id ? {label: 'Delete', confirm: `Delete ${ex.name}? Matches and questions for it are deleted too.`, fn: async () => {
+      await db.ref().update({[`exchanges/${id}`]: null, [`matches/${id}`]: null, [`qa/${id}`]: null, [`history_manual/${id}`]: null, [`history_drawn/${id}`]: null});
+      toast('Exchange deleted');
+    }} : null,
+    onSave: async fd => {
+      const members = {};
+      for (const m of fd.getAll('members')) members[m] = true;
+      const data = {
+        name: String(fd.get('name')).trim(),
+        year: Number(fd.get('year')),
+        cap: fd.get('cap') ? Number(fd.get('cap')) : null,
+        date: fd.get('date') || null,
+        message: String(fd.get('message') || '').trim() || null,
+        members: Object.keys(members).length ? members : null
+      };
+      if (id) await db.ref(`exchanges/${id}`).update(data);
+      else await db.ref('exchanges').push({...data, status: 'open', createdAt: TS});
+      toast('Saved');
+    }
+  });
+  const all = $('#selAll');
+  if (all) {
+    const boxes = [...document.querySelectorAll('#dlgForm input[name=members]')];
+    all.checked = boxes.length && boxes.every(b => b.checked);
+    all.onchange = () => boxes.forEach(b => b.checked = all.checked);
+  }
+}
+
+async function historyDialog(id) {
+  const ex = S.exchanges[id];
+  const year = String((ex.year || new Date().getFullYear()) - 1);
+  const members = Object.keys(ex.members || {}).filter(p => S.people[p]).sort(byName);
+  if (members.length < 2) { toast('Add people to this exchange first'); return; }
+  const existing = (await db.ref(`history_manual/${id}/${year}`).once('value')).val() || {};
+  openDialog({
+    title: `Last year's pairs (${year})`,
+    body: `<p class="small muted" style="margin-top:0">Who gave to whom in ${year}. The draw won't repeat these. Leave blank if you don't know.</p>
+      ${members.map(g => `<div class="pair"><span>${esc(nameOf(g))}</span><span class="muted">→</span>
+        <select name="r_${g}"><option value="">Unknown</option>${Object.keys(S.people).filter(r => r !== g).sort(byName).map(r => `<option value="${r}" ${existing[g] === r ? 'selected' : ''}>${esc(nameOf(r))}</option>`).join('')}</select></div>`).join('')}`,
+    onSave: async fd => {
+      const data = {};
+      for (const g of members) { const r = fd.get('r_' + g); if (r) data[g] = r; }
+      await db.ref(`history_manual/${id}/${year}`).set(Object.keys(data).length ? data : null);
+      toast('Saved');
+    }
+  });
+}
+
+// ---------- actions ----------
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'signinForm') return;
+  e.preventDefault();
+  const email = e.target.email.value.trim();
+  const btn = e.target.querySelector('button'); btn.disabled = true;
+  try {
+    await auth.sendSignInLinkToEmail(email, {url: location.origin + location.pathname, handleCodeInApp: true});
+    try { localStorage.setItem('sg_email', email); } catch {}
+    $('#si_msg').innerHTML = `Check <strong>${esc(email)}</strong> for a sign-in link. Open it on this device.`;
+  } catch (err) { toast(err.message); btn.disabled = false; }
+});
+
+document.addEventListener('click', async e => {
+  const el = e.target.closest('[data-act],[data-tab]');
+  if (!el || el.closest('dialog')) return;
+  if (el.dataset.tab) { S.tab = el.dataset.tab; render(); window.scrollTo(0, 0); return; }
+  const id = el.dataset.id;
+  const ex = id ? S.exchanges[id] : null;
+  try {
+    switch (el.dataset.act) {
+      case 'signout': await auth.signOut(); break;
+      case 'reveal': S.revealed[id] = true; render(); break;
+      case 'hide': S.revealed[id] = false; render(); break;
+      case 'resend':
+        el.disabled = true;
+        await api('/resend', {exchangeId: id});
+        toast('Sent. Check your email.');
+        break;
+      case 'ask': {
+        const rid = S.matches[id];
+        openDialog({
+          title: `Ask ${firstName(nameOf(rid))} anonymously`,
+          body: `<textarea name="q" required maxlength="500" placeholder="What size shirt do you wear?"></textarea><div class="hint">They'll get an email. They won't know it's you.</div>`,
+          save: 'Send',
+          onSave: async fd => {
+            await db.ref(`qa/${id}/${rid}`).push({q: String(fd.get('q')).trim(), askedAt: TS});
+            api('/notify', {exchangeId: id, type: 'question'}).catch(() => {});
+            toast('Question sent');
+          }
+        });
+        break;
+      }
+      case 'answer': {
+        const qid = el.dataset.q;
+        const q = S.qa[id]?.forMe?.[qid] || {};
+        openDialog({
+          title: 'Answer your Secret Santa',
+          body: `<div class="q" style="margin-top:0">${esc(q.q)}</div><label>Your answer</label><textarea name="a" required maxlength="1000">${esc(q.a)}</textarea>`,
+          save: 'Send',
+          onSave: async fd => {
+            const first = !q.a;
+            await db.ref(`qa/${id}/${S.myPid}/${qid}`).update({a: String(fd.get('a')).trim(), answeredAt: TS});
+            if (first) api('/notify', {exchangeId: id, type: 'answer'}).catch(() => {});
+            toast('Answer sent');
+          }
+        });
+        break;
+      }
+      case 'about': aboutDialog(); break;
+      case 'item-add': itemDialog(); break;
+      case 'item-edit': itemDialog(id); break;
+      case 'person-add': personDialog(); break;
+      case 'person-edit': personDialog(id); break;
+      case 'ex-add': exchangeDialog(); break;
+      case 'ex-edit': exchangeDialog(id); break;
+      case 'ex-history': await historyDialog(id); break;
+      case 'ex-invite': {
+        const n = Object.keys(ex.members || {}).length;
+        confirmDialog('Send invites?', `Email all ${n} people in <strong>${esc(ex.name)}</strong> asking them to sign in and add their wishlist.`, 'Send invites', async () => {
+          const r = await api('/invite', {exchangeId: id});
+          toast(`Sent ${r.sent} invite${r.sent === 1 ? '' : 's'}`);
+        }, false);
+        break;
+      }
+      case 'ex-draw': {
+        const force = !!el.dataset.force;
+        const n = Object.keys(ex.members || {}).length;
+        confirmDialog(force ? 'Redraw names?' : 'Draw names?',
+          force ? `This throws out the current matches and questions for <strong>${esc(ex.name)}</strong> and emails all ${n} people their new match.`
+                : `Everyone in <strong>${esc(ex.name)}</strong> (${n} people) gets an email with who they drew. You won't see the results.`,
+          force ? 'Redraw and email' : 'Draw and email',
+          async () => {
+            const r = await api('/draw', {exchangeId: id, force});
+            toast(`Done! Emailed ${r.sent} of ${r.total} people.`);
+          });
+        break;
+      }
+    }
+  } catch (err) { toast(err.message); }
+  finally { if (el.dataset.act === 'resend') el.disabled = false; }
+});
+</script>
+</body>
+</html>
