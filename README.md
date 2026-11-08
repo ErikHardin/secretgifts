@@ -11,7 +11,7 @@ Live at: https://ech-technicalsolutions.com/secretgifts/
 | `index.html` | The whole app (Firebase Auth + Realtime Database) |
 | `database.rules.json` | Realtime Database security rules |
 | `worker/worker.js` | Cloudflare Worker: draw, emails, anonymous questions |
-| `worker/wrangler.toml` | Worker config, used if you deploy from GitHub |
+| `wrangler.toml` | Worker config for Cloudflare deploys from GitHub (root directory blank) |
 
 ## One-time setup
 
@@ -31,7 +31,7 @@ Live at: https://ech-technicalsolutions.com/secretgifts/
 4. Under **API Keys**, create a key with sending access.
 
 ### 3. Cloudflare Worker
-1. Create a Worker named **secretgifts**. Either paste in `worker/worker.js`, or connect this repo with root directory `worker`.
+1. Create a Worker named **secretgifts**. Either paste in `worker/worker.js`, or connect this repo (leave root directory blank).
 2. Under **Settings → Variables and Secrets**, add these:
 
 | Name | Type | Value |

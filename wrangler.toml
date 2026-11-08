@@ -1,9 +1,11 @@
 name = "secretgifts"
-main = "worker.js"
+main = "worker/worker.js"
+workers_dev = true
+preview_urls = false
 compatibility_date = "2026-11-01"
 
 [vars]
-DB_URL = "https://PASTE_PROJECT_ID-default-rtdb.firebaseio.com"
+DB_URL = "https://secretgifts-default-rtdb.firebaseio.com"
 ADMIN_EMAIL = "erikchardin@gmail.com"
 APP_URL = "https://ech-technicalsolutions.com/secretgifts/"
 FROM_EMAIL = "Secret Gifts <gifts@ech-technicalsolutions.com>"
